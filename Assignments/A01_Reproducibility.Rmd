@@ -35,7 +35,7 @@ Why are reproducible practices becoming the norm in data analytics?
 ### Question
 What are your previous experiences with data analytics, R, and Git? Include both formal and informal training.
 
-> Answer: My experiences with data analytics are mainly with Excel. I also took a econometrics course which used Stata. I have no experience with R and Git before.
+> Answer: My experiences with data analytics are mainly with Excel. I also took an econometrics course which used Stata. I have no experience with R and Git before.
 
 ### Question
 Are there any components of the course about which you feel confident?
