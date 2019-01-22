@@ -29,8 +29,12 @@ The completed exercise is due on Thursday, 24 January, 2019 before class begins.
 
 1. Generate a sequence of numbers from one to 100, increasing by fours. Assign this sequence a name. 
 
-2. Compute the mean and median of this sequence. 
+seq(1,100,4)
+sequence_1 <- seq(1,100,4)
 
+2. Compute the mean and median of this sequence. 
+ mean(sequence_1)
+ median(sequence_1)
 3. Ask R to determine whether the mean is greater than the median. 
 
 4. Insert comments in your code to describe what you are doing.
