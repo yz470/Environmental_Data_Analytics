@@ -93,10 +93,10 @@ whetherpassed(b[2])
 whetherpassed(b[3])
 whetherpassed(b[4]) # apply the function to each element of the vector b (test scores)
 
-passed <- function (x) {
+whetherpassed2 <- function (x) {
   ifelse(x<50,"FALSE","TRUE")}
 
-passed(b) # try the `ifelse` statement and see the difference
+whetherpassed2(b) # try the `ifelse` statement and see the difference
 
 ```
 
