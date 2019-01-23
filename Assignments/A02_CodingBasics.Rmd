@@ -66,7 +66,7 @@ b <- c(89,30,60,100)  # numeric vector
 c <- c(TRUE,FALSE,TRUE,TRUE) #logical vector
 
 Examresults <- data.frame(a,b,c)
-names(Examresults) <- c("Name","Score","Passed"); View(Examresults)
+names(Examresults) <- c("Name","Score","Passed")
 
 ```
 
