@@ -1,5 +1,5 @@
 ---
-title: "Assignment 1: Data Exploration"
+title: "Assignment 3: Data Exploration"
 author: "Student Name"
 output: pdf_document
 geometry: margin=2.54cm
