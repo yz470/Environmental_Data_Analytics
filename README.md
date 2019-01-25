@@ -26,3 +26,5 @@ OR
 `git merge upstream/master`
 
 6. If a conflict arises during merge, update the file(s) to your liking, stage them and commit them.
+
+*testing merge error with Taylor*
