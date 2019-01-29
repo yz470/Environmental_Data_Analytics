@@ -1,6 +1,6 @@
 ---
 title: "Assignment 3: Data Exploration"
-author: "Student Name"
+author: Yifei Zhang
 output: pdf_document
 geometry: margin=2.54cm
 ---
@@ -29,7 +29,9 @@ The completed exercise is due on Thursday, 31 January, 2019 before class begins.
 
 Check your working directory, load necessary packages (tidyverse), and upload the North Temperate Lakes long term monitoring dataset for the light, temperature, and oxygen data for three lakes (file name: NTL-LTER_Lake_ChemistryPhysics_Raw.csv). Type your code into the R chunk below.
 ```{r}
-
+getwd()
+library(tidyverse)
+USGS.lake.data <- read.csv("../Data/Raw/NTL-LTER_Lake_ChemistryPhysics_Raw.csv")
 ```
 
 ## 2) Learn about your system
