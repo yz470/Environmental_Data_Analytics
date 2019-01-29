@@ -32,13 +32,14 @@ Check your working directory, load necessary packages (tidyverse), and upload th
 getwd()
 library(tidyverse)
 USGS.lake.data <- read.csv("../Data/Raw/NTL-LTER_Lake_ChemistryPhysics_Raw.csv")
+
 ```
 
 ## 2) Learn about your system
 
 Read about your dataset in the NTL-LTER README file. What are three salient pieces of information you gained from reading this file?
 
-> ANSWER: 
+> ANSWER: 1. The dataset includes information about the temperature, DO and irradiance of the Paul lake, Peter lake and Tuesday lake. 2. The data were collected from 1984 to 2016. 3. There are some "NA"s in the dataset.
 
 ## 3) Obtain basic summaries of your data
 
