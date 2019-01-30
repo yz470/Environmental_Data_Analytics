@@ -31,7 +31,7 @@ Check your working directory, load necessary packages (tidyverse), and upload th
 ```{r}
 getwd()
 library(tidyverse)
-USGS.lake.data <- read.csv("../Data/Raw/NTL-LTER_Lake_ChemistryPhysics_Raw.csv")
+lake.data <- read.csv("../Data/Raw/NTL-LTER_Lake_ChemistryPhysics_Raw.csv")
 
 ```
 
@@ -39,7 +39,7 @@ USGS.lake.data <- read.csv("../Data/Raw/NTL-LTER_Lake_ChemistryPhysics_Raw.csv")
 
 Read about your dataset in the NTL-LTER README file. What are three salient pieces of information you gained from reading this file?
 
-> ANSWER: 1. The dataset includes information about the temperature, DO and irradiance of the Paul lake, Peter lake and Tuesday lake. 2. The data were collected from 1984 to 2016. 3. There are some "NA"s in the dataset.
+> ANSWER: 1. The dataset includes information about the temperature, DO and irradiance of different lakes. 2. The data were collected from 1984 to 2016. 3. There are some "NA"s in the dataset.
 
 ## 3) Obtain basic summaries of your data
 
@@ -53,26 +53,37 @@ Write R commands to display the following information:
 
 ```{r}
 # 1
+dim(lake.data)
 
 # 2
+class(lake.data)
 
 # 3
+head(lake.data,8)
 
 # 4
+class(lake.data$lakename)
+class(lake.data$sampledate)
+class(lake.data$depth)
+class(lake.data$temperature_C)
 
 # 5
-
+summary(lake.data$lakename)
+summary(lake.data$depth)
+summary(lake.data$temperature_C)
 ```
 
 Change sampledate to class = date. After doing this, write an R command to display that the class of sammpledate is indeed date. Write another R command to show the first 10 rows of the date column. 
 
 ```{r}
+lake.data$sampledate <- as.Date(lake.data$sampledate,format = "%m/%d/%y")
 
+class(lake.data$sampledate)
 ```
 
 Question: Do you want to remove NAs from this dataset? Why or why not?
 
-> ANSWER: 
+> ANSWER: No, because there is a "comments" column, in which all the cells are specified as NA. If NAs are removed, all the dataset will be removed accordingly. (assuming using the na.omit statement)
 
 
 ## 4) Explore your data graphically
@@ -87,32 +98,47 @@ Write R commands to display graphs depicting:
 6. Boxplot of temperature based on depth, with depth divided into 0.25 m increments
 7. Scatterplot of temperature by depth
 
-```{r}
+```{r, fig.height = 3, fig.width = 4}
 # 1
-
+ggplot(lake.data, aes(x = temperature_C)) +
+  geom_bar() 
+  
 # 2
+ggplot(lake.data) +
+  geom_histogram(aes(x=temperature_C),binwidth = 1)
 
 # 3
-
+ ggplot(lake.data) +
+  geom_histogram(aes(x=temperature_C),bins=20)
+ 
 # 4
+ggplot(lake.data) +
+  geom_freqpoly(aes(x = temperature_C, color = lakename), bins = 50) +
+  theme(legend.position = "top")
 
 # 5
+ggplot(lake.data) + 
+  geom_boxplot(aes(y = temperature_C, x = lakename)) 
 
 # 6
+ggplot(lake.data) + 
+  geom_boxplot(aes(y = temperature_C, x = depth, group = cut_width(depth, 0.25))) 
 
 # 7 
+ggplot(lake.data) +
+  geom_point(aes(x = depth, y = temperature_C))
 
 ```
 ## 5) Form questions for further data analysis
 
 What did you find out about your data from the basic summaries and graphs you made? Describe in 4-6 sentences.
 
-> ANSWER: 
+> ANSWER: The sample size is 38614. There are 3858 missing data for temperature. The most frequent temperature is around 4 degree Celsius. There is a negative relation betweeen depth and temperature.
 
 What are 3 further questions you might ask as you move forward with  analysis of this dataset?
 
-> ANSWER 1: 
+> ANSWER 1: Is there a relation between dissolved oxygen and temperature?
 
-> ANSWER 2: 
+> ANSWER 2: What is the difference in dissolved oxygen among these lakes?
 
-> ANSWER 3: 
+> ANSWER 3: For the same lake and at the same depth, is there an increasing or decreasing trend for temperature over time?
