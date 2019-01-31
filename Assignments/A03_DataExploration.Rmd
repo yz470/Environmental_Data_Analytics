@@ -100,7 +100,7 @@ Write R commands to display graphs depicting:
 
 ```{r, fig.height = 3, fig.width = 4}
 # 1
-ggplot(lake.data, aes(x = temperature_C, color = lakeid)) +
+ggplot(lake.data[!is.na(lake.data$temperature_C),], aes(x = lakename, )) +
   geom_bar() 
   
 # 2
