@@ -100,8 +100,11 @@ Write R commands to display graphs depicting:
 
 ```{r, fig.height = 3, fig.width = 4}
 # 1
-ggplot(lake.data[!is.na(lake.data$temperature_C),], aes(x = lakename, )) +
+ggplot(lake.data[!is.na(lake.data$temperature_C),], aes(x = lakename )) +
   geom_bar() 
+
+ggplot(lake.data, aes(x = temperature_C, color= lakename )) +
+  geom_bar() # not sure what the question exactly means so I make two plots 
   
 # 2
 ggplot(lake.data) +
