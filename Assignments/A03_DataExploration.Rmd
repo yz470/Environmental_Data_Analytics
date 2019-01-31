@@ -39,7 +39,7 @@ lake.data <- read.csv("../Data/Raw/NTL-LTER_Lake_ChemistryPhysics_Raw.csv")
 
 Read about your dataset in the NTL-LTER README file. What are three salient pieces of information you gained from reading this file?
 
-> ANSWER: 1. The dataset includes information about the temperature, DO and irradiance of different lakes. 2. The data were collected from 1984 to 2016. 3. There are some "NA"s in the dataset.
+> ANSWER: 1. The dataset includes information about the temperature, DO and irradiance of different lakes. 2. The data were collected from 1984 to 2016. 3. I cannot find the units in the dataset.
 
 ## 3) Obtain basic summaries of your data
 
