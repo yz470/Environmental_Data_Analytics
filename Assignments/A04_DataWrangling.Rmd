@@ -34,8 +34,24 @@ The completed exercise is due on Thursday, 7 February, 2019 before class begins.
 
 ```{r}
 #1
+getwd()
+library(tidyverse)
+EPAair_O3_NC2017 <- read.csv("./data/Raw/EPAair_O3_NC2017_raw.csv")
+EPAair_O3_NC2018 <- read.csv("./data/Raw/EPAair_O3_NC2018_raw.csv")
+EPAair_PM25_NC2018 <- read.csv("./data/Raw/EPAair_PM25_NC2018_raw.csv")
+EPAair_PM25_NC2017 <- read.csv("./data/Raw/EPAair_PM25_NC2017_raw.csv")
 
 #2
+head(EPAair_O3_NC2017)
+head(EPAair_O3_NC2018)
+head(EPAair_PM25_NC2017)
+head(EPAair_PM25_NC2018)
+
+summary(EPAair_O3_NC2017)
+summary(EPAair_O3_NC2018)
+summary(EPAair_PM25_NC2017)
+summary(EPAair_PM25_NC2018)
+
 ```
 
 ## Wrangle individual datasets to create processed files.
@@ -46,13 +62,30 @@ The completed exercise is due on Thursday, 7 February, 2019 before class begins.
 
 ```{r}
 #3
+class(EPAair_O3_NC2017$Date)
+class(EPAair_O3_NC2018$Date)
+class(EPAair_PM25_NC2017$Date)
+class(EPAair_PM25_NC2018$Date)
+EPAair_O3_NC2017$Date <- as.Date(EPAair_O3_NC2017$Date,format="%m/%d/%y")
+EPAair_O3_NC2018$Date <- as.Date(EPAair_O3_NC2018$Date,format="%m/%d/%y")
+EPAair_PM25_NC2017$Date <- as.Date(EPAair_PM25_NC2017$Date,format="%m/%d/%y")
+EPAair_PM25_NC2018$Date <- as.Date(EPAair_PM25_NC2018$Date,format="%m/%d/%y")
 
 #4
+EPAair_O3_NC2017_processed <- select(EPAair_O3_NC2017, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPAair_O3_NC2018_processed <- select(EPAair_O3_NC2018, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPAair_PM25_NC2017_processed <- select(EPAair_PM25_NC2017, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
+EPAair_PM25_NC2018_processed <- select(EPAair_PM25_NC2018, Date, DAILY_AQI_VALUE, Site.Name, AQS_PARAMETER_DESC, COUNTY, SITE_LATITUDE, SITE_LONGITUDE)
 
 #5
+EPAair_PM25_NC2017_processed$AQS_PARAMETER_DESC <- "PM2.5"
+EPAair_PM25_NC2018_processed$AQS_PARAMETER_DESC <- "PM2.5"
 
 #6
-
+write.csv(EPAair_O3_NC2017_processed, row.names = FALSE, file = "./Data/Processed/EPAair_O3_NC2017_processed.csv")
+write.csv(EPAair_O3_NC2018_processed, row.names = FALSE, file = "./Data/Processed/EPAair_O3_NC2018_processed.csv")
+write.csv(EPAair_PM25_NC2017_processed, row.names = FALSE, file = "./Data/Processed/EPAair_PM25_NC2017_processed.csv")
+write.csv(EPAair_PM25_NC2018_processed, row.names = FALSE, file = "./Data/Processed/EPAair_PM25_NC2018_processed.csv")
 ```
 
 
@@ -69,9 +102,14 @@ The completed exercise is due on Thursday, 7 February, 2019 before class begins.
 
 ```{r}
 #8
+EPAair_PM25_O3_NC2017_NC2018 <- rbind(EPAair_O3_NC2017_processed, EPAair_O3_NC2018_processed, EPAair_PM25_NC2017_processed, EPAair_PM25_NC2018_processed)
 
 #9
-
+EPAair_PM25_O3_NC2017_NC2018_processed <- EPAair_PM25_O3_NC2017_NC2018 %>%
+  filter(Site.Name =="Blackstone" | Site.Name == "Castle Hayne" | Site.Name == "Leggett" | Site.Name == "Triple Oak") %>%
+  separate(Date, c("Y","m","d")) 
+  colnames(EPAair_PM25_O3_NC2017_NC2018_processed)[1:3] <- c("Year","Month","Day")
+  
 #10
 
 #11
