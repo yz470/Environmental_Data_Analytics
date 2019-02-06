@@ -36,10 +36,10 @@ The completed exercise is due on Thursday, 7 February, 2019 before class begins.
 #1
 getwd()
 library(tidyverse)
-EPAair_O3_NC2017 <- read.csv("./data/Raw/EPAair_O3_NC2017_raw.csv")
-EPAair_O3_NC2018 <- read.csv("./data/Raw/EPAair_O3_NC2018_raw.csv")
-EPAair_PM25_NC2018 <- read.csv("./data/Raw/EPAair_PM25_NC2018_raw.csv")
-EPAair_PM25_NC2017 <- read.csv("./data/Raw/EPAair_PM25_NC2017_raw.csv")
+EPAair_O3_NC2017 <- read.csv("./Data/Raw/EPAair_O3_NC2017_raw.csv")
+EPAair_O3_NC2018 <- read.csv("./Data/Raw/EPAair_O3_NC2018_raw.csv")
+EPAair_PM25_NC2018 <- read.csv("./Data/Raw/EPAair_PM25_NC2018_raw.csv")
+EPAair_PM25_NC2017 <- read.csv("./Data/Raw/EPAair_PM25_NC2017_raw.csv")
 
 #2
 head(EPAair_O3_NC2017)
@@ -132,10 +132,26 @@ b. A summary table of the mean, minimum, and maximum AQI values of O3 and PM2.5 
 
 ```{r}
 #12a
+EPAair_PM25_O3_NC1718_Summaries_by_Month <- 
+  EPAair_PM25_O3_NC2017_NC2018_processed %>%
+  group_by(Month) %>%
+  filter(!is.na(Ozone) & !is.na(PM2.5)) %>%
+  summarise(meanAQI_O3 = mean(Ozone),
+            meanAQI_PM2.5 = mean(PM2.5))
 
 #12b
-
+EPAair_PM25_O3_NC1718_Summaries_by_Site <- 
+  EPAair_PM25_O3_NC2017_NC2018_processed %>%
+  group_by(Site.Name) %>%
+  filter(!is.na(Ozone) & !is.na(PM2.5)) %>%
+  summarise(meanAQI_O3 = mean(Ozone),
+            meanAQI_PM2.5 = mean(PM2.5),
+            minAQI_O3 = min(Ozone),
+            minAQI_PM2.5 = min(PM2.5),
+            maxAQI_O3 = max(Ozone),
+            maxAQI_PM2.5 = max(PM2.5))
 #13
-
+EPAair_PM25_O3_NC1718_Summaries_by_Month
+EPAair_PM25_O3_NC1718_Summaries_by_Site
 ```
 
