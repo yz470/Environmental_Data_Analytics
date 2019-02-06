@@ -42,10 +42,10 @@ EPAair_PM25_NC2018 <- read.csv("./Data/Raw/EPAair_PM25_NC2018_raw.csv")
 EPAair_PM25_NC2017 <- read.csv("./Data/Raw/EPAair_PM25_NC2017_raw.csv")
 
 #2
-head(EPAair_O3_NC2017)
-head(EPAair_O3_NC2018)
-head(EPAair_PM25_NC2017)
-head(EPAair_PM25_NC2018)
+head(EPAair_O3_NC2017, 3)
+head(EPAair_O3_NC2018, 3)
+head(EPAair_PM25_NC2017, 3)
+head(EPAair_PM25_NC2018, 3)
 
 summary(EPAair_O3_NC2017)
 summary(EPAair_O3_NC2018)
