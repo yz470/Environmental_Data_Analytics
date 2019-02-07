@@ -97,7 +97,7 @@ print(PMplot.faceted)
 PMplot.faceted2 <-
   ggplot(EPAair, aes(x = month, y = PM2.5)) +
   geom_point() +
-  facet_wrap(vars(Site.Name, year), nrow = 3)
+  facet_grid(Site.Name ~ year)
 print(PMplot.faceted2)
 
 # Filter dataset within plot building
