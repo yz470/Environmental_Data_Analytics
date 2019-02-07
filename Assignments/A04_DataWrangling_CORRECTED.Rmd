@@ -135,23 +135,23 @@ b. A summary table of the mean, minimum, and maximum AQI values of O3 and PM2.5 
 EPAair_PM25_O3_NC1718_Summaries_by_Month <- 
   EPAair_PM25_O3_NC2017_NC2018_processed %>%
   group_by(Month) %>%
-  filter(!is.na(Ozone) & !is.na(PM2.5)) %>%
-  summarise(meanAQI_O3 = mean(Ozone),
-            meanAQI_PM2.5 = mean(PM2.5))
+  summarise(meanAQI_O3 = mean(na.omit(Ozone)),
+            meanAQI_PM2.5 = mean(na.omit(PM2.5)))
 
+  
 #12b
 EPAair_PM25_O3_NC1718_Summaries_by_Site <- 
   EPAair_PM25_O3_NC2017_NC2018_processed %>%
   group_by(Site.Name) %>%
-  filter(!is.na(Ozone) & !is.na(PM2.5)) %>%
-  summarise(meanAQI_O3 = mean(Ozone),
-            meanAQI_PM2.5 = mean(PM2.5),
-            minAQI_O3 = min(Ozone),
-            minAQI_PM2.5 = min(PM2.5),
-            maxAQI_O3 = max(Ozone),
-            maxAQI_PM2.5 = max(PM2.5))
+  summarise(meanAQI_O3 = mean(na.omit(Ozone)),
+            meanAQI_PM2.5 = mean(na.omit(PM2.5)),
+            minAQI_O3 = min(na.omit(Ozone)),
+            minAQI_PM2.5 = min(na.omit(PM2.5)),
+            maxAQI_O3 = max(na.omit(Ozone)),
+            maxAQI_PM2.5 = max(na.omit(PM2.5)))
 #13
 EPAair_PM25_O3_NC1718_Summaries_by_Month
 EPAair_PM25_O3_NC1718_Summaries_by_Site
+
 ```
 

@@ -198,7 +198,7 @@ begins.
 \end{Shaded}
 
 \begin{verbatim}
-## -- Attaching packages ---------------------------------------------------------------------- tidyverse 1.2.1 --
+## -- Attaching packages ------------------------------------ tidyverse 1.2.1 --
 \end{verbatim}
 
 \begin{verbatim}
@@ -209,7 +209,7 @@ begins.
 \end{verbatim}
 
 \begin{verbatim}
-## -- Conflicts ------------------------------------------------------------------------- tidyverse_conflicts() --
+## -- Conflicts --------------------------------------- tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()
 \end{verbatim}
@@ -783,21 +783,35 @@ files.}\label{wrangle-individual-datasets-to-create-processed-files.}
 \NormalTok{EPAair_PM25_O3_NC1718_Summaries_by_Month <-}\StringTok{ }
 \StringTok{  }\NormalTok{EPAair_PM25_O3_NC2017_NC2018_processed }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{group_by}\NormalTok{(Month) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(Ozone) }\OperatorTok{&}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(PM2.}\DecValTok{5}\NormalTok{)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{meanAQI_O3 =} \KeywordTok{mean}\NormalTok{(Ozone),}
-            \DataTypeTok{meanAQI_PM2.5 =} \KeywordTok{mean}\NormalTok{(PM2.}\DecValTok{5}\NormalTok{))}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{meanAQI_O3 =} \KeywordTok{mean}\NormalTok{(}\KeywordTok{na.omit}\NormalTok{(Ozone)),}
+            \DataTypeTok{meanAQI_PM2.5 =} \KeywordTok{mean}\NormalTok{(}\KeywordTok{na.omit}\NormalTok{(PM2.}\DecValTok{5}\NormalTok{)))}
 
+  
 \CommentTok{#12b}
 \NormalTok{EPAair_PM25_O3_NC1718_Summaries_by_Site <-}\StringTok{ }
 \StringTok{  }\NormalTok{EPAair_PM25_O3_NC2017_NC2018_processed }\OperatorTok{%>%}
 \StringTok{  }\KeywordTok{group_by}\NormalTok{(Site.Name) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{filter}\NormalTok{(}\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(Ozone) }\OperatorTok{&}\StringTok{ }\OperatorTok{!}\KeywordTok{is.na}\NormalTok{(PM2.}\DecValTok{5}\NormalTok{)) }\OperatorTok{%>%}
-\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{meanAQI_O3 =} \KeywordTok{mean}\NormalTok{(Ozone),}
-            \DataTypeTok{meanAQI_PM2.5 =} \KeywordTok{mean}\NormalTok{(PM2.}\DecValTok{5}\NormalTok{),}
-            \DataTypeTok{minAQI_O3 =} \KeywordTok{min}\NormalTok{(Ozone),}
-            \DataTypeTok{minAQI_PM2.5 =} \KeywordTok{min}\NormalTok{(PM2.}\DecValTok{5}\NormalTok{),}
-            \DataTypeTok{maxAQI_O3 =} \KeywordTok{max}\NormalTok{(Ozone),}
-            \DataTypeTok{maxAQI_PM2.5 =} \KeywordTok{max}\NormalTok{(PM2.}\DecValTok{5}\NormalTok{))}
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{meanAQI_O3 =} \KeywordTok{mean}\NormalTok{(}\KeywordTok{na.omit}\NormalTok{(Ozone)),}
+            \DataTypeTok{meanAQI_PM2.5 =} \KeywordTok{mean}\NormalTok{(}\KeywordTok{na.omit}\NormalTok{(PM2.}\DecValTok{5}\NormalTok{)),}
+            \DataTypeTok{minAQI_O3 =} \KeywordTok{min}\NormalTok{(}\KeywordTok{na.omit}\NormalTok{(Ozone)),}
+            \DataTypeTok{minAQI_PM2.5 =} \KeywordTok{min}\NormalTok{(}\KeywordTok{na.omit}\NormalTok{(PM2.}\DecValTok{5}\NormalTok{)),}
+            \DataTypeTok{maxAQI_O3 =} \KeywordTok{max}\NormalTok{(}\KeywordTok{na.omit}\NormalTok{(Ozone)),}
+            \DataTypeTok{maxAQI_PM2.5 =} \KeywordTok{max}\NormalTok{(}\KeywordTok{na.omit}\NormalTok{(PM2.}\DecValTok{5}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in min(na.omit(Ozone)): no non-missing arguments to min; returning
+## Inf
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in max(na.omit(Ozone)): no non-missing arguments to max; returning
+## -Inf
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
 \CommentTok{#13}
 \NormalTok{EPAair_PM25_O3_NC1718_Summaries_by_Month}
 \end{Highlighting}
@@ -807,18 +821,18 @@ files.}\label{wrangle-individual-datasets-to-create-processed-files.}
 ## # A tibble: 12 x 3
 ##    Month meanAQI_O3 meanAQI_PM2.5
 ##    <chr>      <dbl>         <dbl>
-##  1 01          31.5          34.2
-##  2 02          35.4          37.6
-##  3 03          42.4          37.4
-##  4 04          43.5          31.5
-##  5 05          39.5          30.6
-##  6 06          39.2          30.9
-##  7 07          38.3          31.9
-##  8 08          34.4          32.3
-##  9 09          32.6          30.7
-## 10 10          32.3          30.1
-## 11 11          30.1          42.1
-## 12 12          29.8          46.6
+##  1 01          31.5          34.6
+##  2 02          35.5          36.7
+##  3 03          42.4          35.1
+##  4 04          44.3          32.5
+##  5 05          38.9          31.7
+##  6 06          38.7          33.3
+##  7 07          38.2          33.1
+##  8 08          34.0          33.7
+##  9 09          32.6          31.9
+## 10 10          32.1          29.3
+## 11 11          30.1          36.8
+## 12 12          29.8          41.1
 \end{verbatim}
 
 \begin{Shaded}
@@ -828,12 +842,13 @@ files.}\label{wrangle-individual-datasets-to-create-processed-files.}
 \end{Shaded}
 
 \begin{verbatim}
-## # A tibble: 2 x 7
+## # A tibble: 3 x 7
 ##   Site.Name meanAQI_O3 meanAQI_PM2.5 minAQI_O3 minAQI_PM2.5 maxAQI_O3
-##   <fct>          <dbl>         <dbl>     <dbl>        <dbl>     <dbl>
-## 1 Blacksto~       38.3          36.7         8            0        97
-## 2 Bryson C~       35.4          30.3         5            3        71
-## # ... with 1 more variable: maxAQI_PM2.5 <dbl>
+##   <fct>          <dbl>         <dbl>     <dbl>        <int>     <dbl>
+## 1 Blacksto~       38.5          36.7         8            0        97
+## 2 Bryson C~       35.2          32.3         5            3        71
+## 3 Triple O~      NaN            33.5       Inf            0      -Inf
+## # ... with 1 more variable: maxAQI_PM2.5 <int>
 \end{verbatim}
 
 
