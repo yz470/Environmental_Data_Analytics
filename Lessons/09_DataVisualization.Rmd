@@ -115,7 +115,7 @@ print(O3plot.Blackstone)
 Plot_surface_T <- ggplot(subset(PeterPaul.chem.nutrients, depth = 0) , aes(x = daynum, y = temperature_C, color = year4)) +
   geom_point() +
   facet_wrap(vars(lakename), nrow = 2)
-print(Plot_T)
+print(Plot_surface_T)
 
 #2. 
 # Plot temperature by date. Color your points by depth.
@@ -153,9 +153,9 @@ print(tempvsdepth)
 
 NvsP <-
   ggplot(PeterPaul.chem.nutrients, aes(x = tp_ug, y = tn_ug, color = depth)) +
-  geom_point() #+
-  #geom_smooth(method = lm) +
-  #geom_abline(aes(slope = 16, intercept = 0))
+  geom_point() +
+  geom_smooth(method = lm) + #specify linear model
+  geom_abline(aes(slope = 16, intercept = 0),lty=2) #lty-line type 
 print(NvsP)
 
 # Exercise: Plot relationships between air quality measurements
@@ -163,7 +163,11 @@ print(NvsP)
 # 1. 
 # Plot AQI values for ozone by PM2.5, colored by site. 
 # Add a line of best fit for the linear regression of these variables.
-
+AQI_O3_PM2.5<-
+  ggplot(EPAair, aes(x = PM2.5, y = Ozone, color = Site.Name))+
+  geom_point()+
+  geom_smooth(method = lm)
+print(AQI_O3_PM2.5)
   
 ```
 
@@ -179,7 +183,7 @@ PeterPaul.nutrient.summaries <- PeterPaul.nutrients.gathered %>%
 Nutrientplot <- 
   ggplot(PeterPaul.nutrients.gathered) +
   geom_bar(aes(x = lakename, y = concentration, fill = as.factor(nutrient)), # why did we use fill?
-           position = "dodge", stat = "summary", fun.y = "mean")             # what's happening here?
+           position = "dodge", stat = "summary", fun.y = "mean")             # what's happening here? "position = dodge" separates
 print(Nutrientplot)
 
 Nutrientplot2 <- 
@@ -232,6 +236,14 @@ print(Nutrientplot7)
 # 1. 
 # Create a bar chart plus standard deviation error bars for PM2.5, divided by year. 
 # Create separate bars for each site. 
+EPAair_summary <- EPAair %>%
+  group_by(Year,Site.Name) %>%
+  summarize(sd = sd(PM2.5, na.rm = TRUE), mean = mean(PM2.5, na.rm = TRUE))
+
+
+ggplot(EPAair_summary, aes(y = mean, x = as.factor(Year), fill = Site.Name )) +
+  geom_bar(position = "dodge", stat = "identity") +
+  geom_errorbar(aes(ymin = mean - sd, ymax = mean + sd) , position = "dodge")
 
 # 2. 
 # Create a new plot that better depicts the distribution of PM2.5 concentrations. 
