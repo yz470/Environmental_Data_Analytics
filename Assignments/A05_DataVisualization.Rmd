@@ -1,6 +1,6 @@
 ---
 title: "Assignment 5: Data Visualization"
-author: "Student Name"
+author: Yifei Zhang
 output: pdf_document
 geometry: margin=2.54cm
 editor_options: 
@@ -34,14 +34,39 @@ The completed exercise is due on Tuesday, 19 February, 2019 before class begins.
 
 ```{r}
 #1
-
+getwd()
+library(tidyverse)
+library(colormap)
+PeterPaul <- read.csv("./Data/Processed/NTL-LTER_Lake_Nutrients_PeterPaul_Processed.csv")
+PeterPaul_gathered <- read.csv("./Data/Processed/NTL-LTER_Lake_Nutrients_PeterPaulGathered_Processed.csv")
+USGS_Stream <- read.csv("./Data/Raw/USGS_Site02085000_Flow_Raw.csv")
+EPA_Ecotox <- read.csv("./Data/Raw/ECOTOX_Neonicotinoids_Mortality_raw.csv")
 #2
+PeterPaul$sampledate <- as.Date(PeterPaul$sampledate, format="%Y-%m-%d")
+USGS_Stream$datetime <- as.Date(USGS_Stream$datetime, format = "%m/%d/%y")
+USGS_Stream$datetime <- format(USGS_Stream$datetime, "%y%m%d")
+create_early_dates <- function(x){
+                                paste0(ifelse(x<=181231, "20","19"),x)
+}
+USGS_Stream$datetime <- create_early_dates(USGS_Stream$datetime)
+USGS_Stream$datetime <- as.Date(USGS_Stream$datetime, format = "%Y%m%d")
+
+colnames(USGS_Stream) <- c("agency_cd", "site_no", "datetime", 
+                              "discharge.max", "discharge.max.approval", 
+                              "discharge.min", "discharge.min.approval", 
+                              "discharge.mean", "discharge.mean.approval", 
+                              "gage.height.max", "gage.height.max.approval", 
+                              "gage.height.min", "gage.height.min.approval", 
+                              "gage.height.mean", "gage.height.mean.approval")
 ```
 ## Define your theme
 3. Build a theme and set it as your default theme.
 
 ```{r}
 #3
+Yifei_theme <- theme_light()+
+  theme(axis.text= element_text(color = "black"), legend.position ="right",
+        strip.text = element_text(size = 12, colour = "black"))
 
 ```
 
@@ -54,6 +79,17 @@ Hint: a good way to build graphs is to make them ugly first and then create more
 
 ```{r}
 #4
+plot4 <- ggplot(PeterPaul, aes(x = po4 , y= tp_ug, color = lakename) ) + 
+  geom_point() +
+  geom_smooth(method = lm) +
+  facet_wrap(vars(lakename) , nrow = 2) +
+  Yifei_theme +
+  labs(x = "Phosphate (\U003BCg/L)" ,y = "Total Phosphor (\U003BCg/L)") +
+  theme(legend.position= "none")+
+  xlim(0,50) + 
+  ylim(0,150)+
+  scale_color_colormap(discrete = TRUE)
+print(plot4)
 
 ```
 
@@ -62,7 +98,14 @@ Hint: a good way to build graphs is to make them ugly first and then create more
 
 ```{r}
 #5
-
+plot5 <- ggplot(subset(PeterPaul_gathered, lakename == "Peter Lake"), aes(x = as.Date(sampledate), y = concentration, color = depth)) +
+  geom_point()+
+  facet_wrap(vars(nutrient) , nrow = 5, labeller = as_labeller(c(`nh34` = "Ammonia and Ammonium" ,`no23`="Nitrite and Nitrate",`po4`="Phosphate",`tn_ug`="Total Nirtogen",`tp_ug`="Total Phophorus" ))) +
+  scale_color_continuous(trans = 'reverse')+
+  labs(y = "Concentration (\U003BCg/L)", x = "", color = "Depth(m)")+
+  Yifei_theme
+  
+print(plot5)
 ```
 
 
@@ -70,17 +113,49 @@ Hint: a good way to build graphs is to make them ugly first and then create more
 
 ```{r}
 #6
+install.packages("ggpubr")
+library(ggpubr)
+plot6_1 <- ggplot(USGS_Stream, aes(y = discharge.mean, x = as.Date(datetime))) +
+  geom_line()+
+  scale_x_date(limits = as.Date(c("2004-01-01", "2018-12-31")),
+ date_breaks = "1 year", date_labels = "%Y") +
+  ylim(0,1000)+
+  ylab(expression(paste("Mean discharge (ft"^3,"/s)"))) +
+  xlab(expression(""))+
+  Yifei_theme
+print(plot6_1)
+
+plot6_2 <- ggplot(USGS_Stream, aes(y = discharge.mean, x = as.Date(datetime))) +
+  geom_point()+
+  geom_smooth()+
+  scale_x_date(limits = as.Date(c("2004-01-01", "2018-12-31")),
+ date_breaks = "1 year", date_labels = "%Y") +
+  ylim(0,1000)+
+  ylab(expression(paste("Mean discharge (ft"^3,"/s)"))) +
+  xlab(expression(""))+
+  Yifei_theme
+print(plot6_2)
+
+ggarrange(plot6_1,plot6_2, nrow = 2)
 
 ```
 Question: How do these two types of lines affect your interpretation of the data?
 
-> Answer:
+> Answer: The geom_line function just connects all the points together. The line shows the range of the discharge values. The geom_smooth function draws a line that shows the general trend of the discharge over the time.
 
 7. [ECOTOX Neonicotinoids] Plot the concentration, divided by chemical name. Choose a geom that accurately portrays the distribution of data points.
 
 ```{r}
 #7 
-
+library(RColorBrewer)
+plot7 <- ggplot(EPA_Ecotox, aes(x= Conc..Mean..Std.,color = Chemical.Name))+
+  geom_freqpoly()+
+  Yifei_theme+
+  scale_color_manual(values = c('#b2182b','#d6604d','#f4a582','#fddbc7','#f7f7f7','#d1e5f0','#92c5de','#4393c3','#2166ac'))+
+  labs(x="Concentration",y = "Count", color = "Chemical Name")+
+  xlim(0,1000)
+  
+print(plot7)
 ```
 
 
