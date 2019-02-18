@@ -22,6 +22,7 @@ PeterPaul.nutrients.gathered <- read.csv("./Data/Processed/NTL-LTER_Lake_Nutrien
 EPAair <- read.csv("./Data/Processed/EPAair_O3PM25_3sites1718_processed.csv")
 
 EPAair$Date <- as.Date(EPAair$Date, format = "%Y-%m-%d")
+
 PeterPaul.chem.nutrients$sampledate <- as.Date(PeterPaul.chem.nutrients$sampledate, format = "%Y-%m-%d")
 
 ```
@@ -116,7 +117,7 @@ Perception is key! Choose palettes that are visually pleasing and will communica
 
 ```{r, warning = FALSE}
 #install.packages("viridis")
-#install.packages("RColorBrewer")
+install.packages("RColorBrewer")
 #install.packages("colormap")
 library(viridis)
 library(RColorBrewer)
