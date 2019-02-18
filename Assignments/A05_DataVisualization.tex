@@ -198,7 +198,7 @@ begins.
 \end{Shaded}
 
 \begin{verbatim}
-## -- Attaching packages ----------------------------------------------------------------- tidyverse 1.2.1 --
+## -- Attaching packages ------------------------------------------------------------------------------ tidyverse 1.2.1 --
 \end{verbatim}
 
 \begin{verbatim}
@@ -209,7 +209,7 @@ begins.
 \end{verbatim}
 
 \begin{verbatim}
-## -- Conflicts -------------------------------------------------------------------- tidyverse_conflicts() --
+## -- Conflicts --------------------------------------------------------------------------------- tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()
 \end{verbatim}
@@ -256,7 +256,7 @@ begins.
 \CommentTok{#3}
 \NormalTok{Yifei_theme <-}\StringTok{ }\KeywordTok{theme_light}\NormalTok{()}\OperatorTok{+}
 \StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{axis.text=} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{color =} \StringTok{"black"}\NormalTok{), }\DataTypeTok{legend.position =}\StringTok{"right"}\NormalTok{,}
-        \DataTypeTok{strip.text =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{12}\NormalTok{, }\DataTypeTok{colour =} \StringTok{"black"}\NormalTok{))}
+        \DataTypeTok{strip.text =} \KeywordTok{element_text}\NormalTok{(}\DataTypeTok{size =} \DecValTok{14}\NormalTok{, }\DataTypeTok{colour =} \StringTok{"black"}\NormalTok{))}
 \end{Highlighting}
 \end{Shaded}
 
@@ -374,7 +374,7 @@ create more code to make them pretty.
 
 \NormalTok{plot6_}\DecValTok{2}\NormalTok{ <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(USGS_Stream, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ discharge.mean, }\DataTypeTok{x =} \KeywordTok{as.Date}\NormalTok{(datetime))) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{geom_point}\NormalTok{()}\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{()}\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{color=} \StringTok{"#4393c3"}\NormalTok{)}\OperatorTok{+}
 \StringTok{  }\KeywordTok{scale_x_date}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{as.Date}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"2004-01-01"}\NormalTok{, }\StringTok{"2018-12-31"}\NormalTok{)),}
  \DataTypeTok{date_breaks =} \StringTok{"1 year"}\NormalTok{, }\DataTypeTok{date_labels =} \StringTok{"%Y"}\NormalTok{) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{ylim}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1000}\NormalTok{)}\OperatorTok{+}
@@ -435,7 +435,7 @@ the time.
 \StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{"Concentration"}\NormalTok{,}\DataTypeTok{y =} \StringTok{"Count"}\NormalTok{, }\DataTypeTok{color =} \StringTok{"Chemical Name"}\NormalTok{) }\OperatorTok{+}
 \StringTok{   }\KeywordTok{xlim}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1000}\NormalTok{)}
 
- \CommentTok{#print(plot7)}
+\CommentTok{#print(plot7)}
 \end{Highlighting}
 \end{Shaded}
 
