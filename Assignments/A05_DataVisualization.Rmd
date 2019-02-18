@@ -3,8 +3,7 @@ title: 'Assignment 5: Data Visualization'
 author: "Yifei Zhang"
 geometry: margin=2.54cm
 output:
-  pdf_document: 
-    latex_engine: xelatex
+  pdf_document: default
   word_document: default
 editor_options:
   chunk_output_type: inline
@@ -154,7 +153,7 @@ plot7 <- ggplot(EPA_Ecotox, aes(x= Conc..Mean..Std.,color = Chemical.Name)) +
   geom_freqpoly() +
   Yifei_theme+
   scale_color_manual(values = c('#b2182b','#d6604d','#f4a582','#fddbc7','#f7f7f7','#d1e5f0','#92c5de','#4393c3','#2166ac'))+
-  labs(x="Concentration",y = "Count", color = "Chemical Name") +
+  labs(x="Concentration (mg/L)",y = "Count", color = "Chemical Name") +
    xlim(0,1000)
 
 print(plot7)
