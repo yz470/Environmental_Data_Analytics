@@ -1,9 +1,12 @@
 ---
-title: "Assignment 5: Data Visualization"
-author: Yifei Zhang
-output: pdf_document
+title: 'Assignment 5: Data Visualization'
+author: "Yifei Zhang"
 geometry: margin=2.54cm
-editor_options: 
+output:
+  pdf_document: 
+    latex_engine: xelatex
+  word_document: default
+editor_options:
   chunk_output_type: inline
 ---
 
@@ -77,26 +80,24 @@ Hint: a good way to build graphs is to make them ugly first and then create more
 
 4. [NTL-LTER] Plot total phosphorus by phosphate, with separate aesthetics for Peter and Paul lakes. Add a line of best fit and color it black.
 
-```{r, fig.height = 4, fig.width = 6}
+```{r, fig.height = 4, fig.width = 6, message = FALSE, warning = FALSE}
 #4
 plot4 <- ggplot(PeterPaul, aes(x = po4 , y= tp_ug, color = lakename) ) + 
   geom_point() +
-  geom_smooth(method = lm) +
-  facet_wrap(vars(lakename) , nrow = 2) +
+  geom_smooth(method = lm, color = "black") +
   Yifei_theme +
   labs(x = "Phosphate (\U003BCg/L)" ,y = "Total Phosphor (\U003BCg/L)") +
-  theme(legend.position= "none")+
   xlim(0,50) + 
   ylim(0,150)+
   scale_color_colormap(discrete = TRUE)
 
-#print(plot4)
+print(plot4)
 ```
 
 
 5. [NTL-LTER] Plot nutrients by date for Peter Lake, with separate colors for each depth. Facet your graph by the nutrient type.
 
-```{r, fig.height = 4, fig.width = 6}
+```{r, fig.height = 4, fig.width = 6, message = FALSE, warning = FALSE}
 #5
 plot5 <- ggplot(subset(PeterPaul_gathered, lakename == "Peter Lake"), aes(x = as.Date(sampledate), y = concentration, color = depth)) +
   geom_point()+
@@ -105,14 +106,14 @@ plot5 <- ggplot(subset(PeterPaul_gathered, lakename == "Peter Lake"), aes(x = as
   labs(y = "Concentration (\U003BCg/L)", x = "", color = "Depth(m)")+
   Yifei_theme
 
-#print(plot5)
+print(plot5)
 
 ```
 
 
 6. [USGS gauge] Plot discharge by date. Create two plots, one with the points connected with geom_line and one with the points connected with geom_smooth (hint: do not use method = "lm"). Place these graphs on the same plot (hint: ggarrange or something similar)
 
-```{r}
+```{r, message = FALSE, warning = FALSE}
 #6
 #install.packages("ggpubr")
 library(ggpubr)
@@ -146,17 +147,17 @@ Question: How do these two types of lines affect your interpretation of the data
 
 7. [ECOTOX Neonicotinoids] Plot the concentration, divided by chemical name. Choose a geom that accurately portrays the distribution of data points.
 
-```{r, fig.height = 4, fig.width = 6}
+```{r, fig.height = 4, fig.width = 6, message = FALSE, warning = FALSE}
 #7 
 library(RColorBrewer)
-plot7 <- ggplot(subset(EPA_Ecotox, Conc..Units..Std. == "AI mg/L"), aes(x= Conc..Mean..Std.,color = Chemical.Name)) +
+plot7 <- ggplot(EPA_Ecotox, aes(x= Conc..Mean..Std.,color = Chemical.Name)) +
   geom_freqpoly() +
   Yifei_theme+
   scale_color_manual(values = c('#b2182b','#d6604d','#f4a582','#fddbc7','#f7f7f7','#d1e5f0','#92c5de','#4393c3','#2166ac'))+
   labs(x="Concentration",y = "Count", color = "Chemical Name") +
    xlim(0,1000)
 
-#print(plot7)
+print(plot7)
   
 
 ```

@@ -284,18 +284,18 @@ create more code to make them pretty.
 \CommentTok{#4}
 \NormalTok{plot4 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(PeterPaul, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ po4 , }\DataTypeTok{y=}\NormalTok{ tp_ug, }\DataTypeTok{color =}\NormalTok{ lakename) ) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{geom_point}\NormalTok{() }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =}\NormalTok{ lm) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{facet_wrap}\NormalTok{(}\KeywordTok{vars}\NormalTok{(lakename) , }\DataTypeTok{nrow =} \DecValTok{2}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_smooth}\NormalTok{(}\DataTypeTok{method =}\NormalTok{ lm, }\DataTypeTok{color =} \StringTok{"black"}\NormalTok{) }\OperatorTok{+}
 \StringTok{  }\NormalTok{Yifei_theme }\OperatorTok{+}
 \StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x =} \StringTok{"Phosphate (\textbackslash{}U003BCg/L)"}\NormalTok{ ,}\DataTypeTok{y =} \StringTok{"Total Phosphor (\textbackslash{}U003BCg/L)"}\NormalTok{) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{theme}\NormalTok{(}\DataTypeTok{legend.position=} \StringTok{"none"}\NormalTok{)}\OperatorTok{+}
 \StringTok{  }\KeywordTok{xlim}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{50}\NormalTok{) }\OperatorTok{+}\StringTok{ }
 \StringTok{  }\KeywordTok{ylim}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{150}\NormalTok{)}\OperatorTok{+}
 \StringTok{  }\KeywordTok{scale_color_colormap}\NormalTok{(}\DataTypeTok{discrete =} \OtherTok{TRUE}\NormalTok{)}
 
-\CommentTok{#print(plot4)}
+\KeywordTok{print}\NormalTok{(plot4)}
 \end{Highlighting}
 \end{Shaded}
+
+\includegraphics{A05_DataVisualization_files/figure-latex/unnamed-chunk-3-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -316,9 +316,11 @@ create more code to make them pretty.
 \StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{y =} \StringTok{"Concentration (\textbackslash{}U003BCg/L)"}\NormalTok{, }\DataTypeTok{x =} \StringTok{""}\NormalTok{, }\DataTypeTok{color =} \StringTok{"Depth(m)"}\NormalTok{)}\OperatorTok{+}
 \StringTok{  }\NormalTok{Yifei_theme}
 
-\CommentTok{#print(plot5)}
+\KeywordTok{print}\NormalTok{(plot5)}
 \end{Highlighting}
 \end{Shaded}
+
+\includegraphics{A05_DataVisualization_files/figure-latex/unnamed-chunk-4-1.pdf}
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -336,32 +338,6 @@ create more code to make them pretty.
 \CommentTok{#6}
 \CommentTok{#install.packages("ggpubr")}
 \KeywordTok{library}\NormalTok{(ggpubr)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-## Loading required package: magrittr
-\end{verbatim}
-
-\begin{verbatim}
-## 
-## Attaching package: 'magrittr'
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:purrr':
-## 
-##     set_names
-\end{verbatim}
-
-\begin{verbatim}
-## The following object is masked from 'package:tidyr':
-## 
-##     extract
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
 \NormalTok{plot6_}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(USGS_Stream, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =}\NormalTok{ discharge.mean, }\DataTypeTok{x =} \KeywordTok{as.Date}\NormalTok{(datetime))) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{geom_line}\NormalTok{()}\OperatorTok{+}
 \StringTok{  }\KeywordTok{scale_x_date}\NormalTok{(}\DataTypeTok{limits =} \KeywordTok{as.Date}\NormalTok{(}\KeywordTok{c}\NormalTok{(}\StringTok{"2004-01-01"}\NormalTok{, }\StringTok{"2018-12-31"}\NormalTok{)),}
@@ -386,22 +362,6 @@ create more code to make them pretty.
 \KeywordTok{ggarrange}\NormalTok{(plot6_}\DecValTok{1}\NormalTok{,plot6_}\DecValTok{2}\NormalTok{, }\DataTypeTok{nrow =} \DecValTok{2}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
-
-\begin{verbatim}
-## Warning: Removed 28033 rows containing missing values (geom_path).
-\end{verbatim}
-
-\begin{verbatim}
-## `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'
-\end{verbatim}
-
-\begin{verbatim}
-## Warning: Removed 28067 rows containing non-finite values (stat_smooth).
-\end{verbatim}
-
-\begin{verbatim}
-## Warning: Removed 28067 rows containing missing values (geom_point).
-\end{verbatim}
 
 \includegraphics{A05_DataVisualization_files/figure-latex/unnamed-chunk-5-1.pdf}
 Question: How do these two types of lines affect your interpretation of
@@ -428,16 +388,18 @@ the time.
 \begin{Highlighting}[]
 \CommentTok{#7 }
 \KeywordTok{library}\NormalTok{(RColorBrewer)}
-\NormalTok{plot7 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{subset}\NormalTok{(EPA_Ecotox, Conc..Units..Std. }\OperatorTok{==}\StringTok{ "AI mg/L"}\NormalTok{), }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{ Conc..Mean..Std.,}\DataTypeTok{color =}\NormalTok{ Chemical.Name)) }\OperatorTok{+}
+\NormalTok{plot7 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(EPA_Ecotox, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{ Conc..Mean..Std.,}\DataTypeTok{color =}\NormalTok{ Chemical.Name)) }\OperatorTok{+}
 \StringTok{  }\KeywordTok{geom_freqpoly}\NormalTok{() }\OperatorTok{+}
 \StringTok{  }\NormalTok{Yifei_theme}\OperatorTok{+}
 \StringTok{  }\KeywordTok{scale_color_manual}\NormalTok{(}\DataTypeTok{values =} \KeywordTok{c}\NormalTok{(}\StringTok{'#b2182b'}\NormalTok{,}\StringTok{'#d6604d'}\NormalTok{,}\StringTok{'#f4a582'}\NormalTok{,}\StringTok{'#fddbc7'}\NormalTok{,}\StringTok{'#f7f7f7'}\NormalTok{,}\StringTok{'#d1e5f0'}\NormalTok{,}\StringTok{'#92c5de'}\NormalTok{,}\StringTok{'#4393c3'}\NormalTok{,}\StringTok{'#2166ac'}\NormalTok{))}\OperatorTok{+}
 \StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{"Concentration"}\NormalTok{,}\DataTypeTok{y =} \StringTok{"Count"}\NormalTok{, }\DataTypeTok{color =} \StringTok{"Chemical Name"}\NormalTok{) }\OperatorTok{+}
 \StringTok{   }\KeywordTok{xlim}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{1000}\NormalTok{)}
 
-\CommentTok{#print(plot7)}
+\KeywordTok{print}\NormalTok{(plot7)}
 \end{Highlighting}
 \end{Shaded}
+
+\includegraphics{A05_DataVisualization_files/figure-latex/unnamed-chunk-6-1.pdf}
 
 
 \end{document}
