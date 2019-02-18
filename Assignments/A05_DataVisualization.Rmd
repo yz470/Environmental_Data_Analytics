@@ -4,7 +4,7 @@ author: Yifei Zhang
 output: pdf_document
 geometry: margin=2.54cm
 editor_options: 
-  chunk_output_type: console
+  chunk_output_type: inline
 ---
 
 ## OVERVIEW
@@ -89,8 +89,8 @@ plot4 <- ggplot(PeterPaul, aes(x = po4 , y= tp_ug, color = lakename) ) +
   xlim(0,50) + 
   ylim(0,150)+
   scale_color_colormap(discrete = TRUE)
-print(plot4)
 
+#print(plot4)
 ```
 
 
@@ -104,8 +104,9 @@ plot5 <- ggplot(subset(PeterPaul_gathered, lakename == "Peter Lake"), aes(x = as
   scale_color_continuous(trans = 'reverse')+
   labs(y = "Concentration (\U003BCg/L)", x = "", color = "Depth(m)")+
   Yifei_theme
-  
-print(plot5)
+
+#print(plot5)
+
 ```
 
 
@@ -113,7 +114,7 @@ print(plot5)
 
 ```{r}
 #6
-install.packages("ggpubr")
+#install.packages("ggpubr")
 library(ggpubr)
 plot6_1 <- ggplot(USGS_Stream, aes(y = discharge.mean, x = as.Date(datetime))) +
   geom_line()+
@@ -123,7 +124,7 @@ plot6_1 <- ggplot(USGS_Stream, aes(y = discharge.mean, x = as.Date(datetime))) +
   ylab(expression(paste("Mean discharge (ft"^3,"/s)"))) +
   xlab(expression(""))+
   Yifei_theme
-print(plot6_1)
+#print(plot6_1)
 
 plot6_2 <- ggplot(USGS_Stream, aes(y = discharge.mean, x = as.Date(datetime))) +
   geom_point()+
@@ -134,7 +135,7 @@ plot6_2 <- ggplot(USGS_Stream, aes(y = discharge.mean, x = as.Date(datetime))) +
   ylab(expression(paste("Mean discharge (ft"^3,"/s)"))) +
   xlab(expression(""))+
   Yifei_theme
-print(plot6_2)
+#print(plot6_2)
 
 ggarrange(plot6_1,plot6_2, nrow = 2)
 
@@ -154,9 +155,10 @@ plot7 <- ggplot(subset(EPA_Ecotox, Conc..Units..Std. == "AI mg/L"), aes(x= Conc.
   scale_color_manual(values = c('#b2182b','#d6604d','#f4a582','#fddbc7','#f7f7f7','#d1e5f0','#92c5de','#4393c3','#2166ac'))+
   labs(x="Concentration",y = "Count", color = "Chemical Name") +
    xlim(0,1000)
- 
+
+ #print(plot7)
   
-print(plot7)
+
 ```
 
 
