@@ -149,8 +149,8 @@ Question: How do these two types of lines affect your interpretation of the data
 ```{r, fig.height = 4, fig.width = 6, message = FALSE, warning = FALSE}
 #7 
 library(RColorBrewer)
-plot7 <- ggplot(EPA_Ecotox, aes(x= Conc..Mean..Std.,color = Chemical.Name)) +
-  geom_freqpoly() +
+plot7 <- ggplot(subset(EPA_Ecotox, Conc..Units..Std.== "AI mg/L" | Conc..Units..Std.== "mg/L") , aes(x= Conc..Mean..Std.,color = Chemical.Name)) +
+  geom_freqpoly(bin=100) +
   Yifei_theme+
   scale_color_manual(values = c('#b2182b','#d6604d','#f4a582','#fddbc7','#f7f7f7','#d1e5f0','#92c5de','#4393c3','#2166ac'))+
   labs(x="Concentration (mg/L)",y = "Count", color = "Chemical Name") +

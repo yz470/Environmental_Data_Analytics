@@ -388,8 +388,8 @@ the time.
 \begin{Highlighting}[]
 \CommentTok{#7 }
 \KeywordTok{library}\NormalTok{(RColorBrewer)}
-\NormalTok{plot7 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(EPA_Ecotox, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{ Conc..Mean..Std.,}\DataTypeTok{color =}\NormalTok{ Chemical.Name)) }\OperatorTok{+}
-\StringTok{  }\KeywordTok{geom_freqpoly}\NormalTok{() }\OperatorTok{+}
+\NormalTok{plot7 <-}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{subset}\NormalTok{(EPA_Ecotox, Conc..Units..Std.}\OperatorTok{==}\StringTok{ "AI mg/L"} \OperatorTok{|}\StringTok{ }\NormalTok{Conc..Units..Std.}\OperatorTok{==}\StringTok{ "mg/L"}\NormalTok{) , }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{ Conc..Mean..Std.,}\DataTypeTok{color =}\NormalTok{ Chemical.Name)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_freqpoly}\NormalTok{(}\DataTypeTok{bin=}\DecValTok{100}\NormalTok{) }\OperatorTok{+}
 \StringTok{  }\NormalTok{Yifei_theme}\OperatorTok{+}
 \StringTok{  }\KeywordTok{scale_color_manual}\NormalTok{(}\DataTypeTok{values =} \KeywordTok{c}\NormalTok{(}\StringTok{'#b2182b'}\NormalTok{,}\StringTok{'#d6604d'}\NormalTok{,}\StringTok{'#f4a582'}\NormalTok{,}\StringTok{'#fddbc7'}\NormalTok{,}\StringTok{'#f7f7f7'}\NormalTok{,}\StringTok{'#d1e5f0'}\NormalTok{,}\StringTok{'#92c5de'}\NormalTok{,}\StringTok{'#4393c3'}\NormalTok{,}\StringTok{'#2166ac'}\NormalTok{))}\OperatorTok{+}
 \StringTok{  }\KeywordTok{labs}\NormalTok{(}\DataTypeTok{x=}\StringTok{"Concentration (mg/L)"}\NormalTok{,}\DataTypeTok{y =} \StringTok{"Count"}\NormalTok{, }\DataTypeTok{color =} \StringTok{"Chemical Name"}\NormalTok{) }\OperatorTok{+}
