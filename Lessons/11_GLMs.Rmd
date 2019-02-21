@@ -73,18 +73,19 @@ Are Ozone levels below the threshold for "good" AQI index (0-50)?
 summary(EPAair$Ozone)
 
 # Evaluate assumption of normal distribution
-shapiro.test(EPAair$Ozone)
+shapiro.test(EPAair$Ozone)  
 ggplot(EPAair, aes(x = Ozone)) +
   geom_histogram(stat = "count")
 qqnorm(EPAair$Ozone); qqline(EPAair$Ozone)
 
 O3.onesample <- t.test(EPAair$Ozone, mu = 50, alternative = "less")
 O3.onesample
+
 ```
 
 What information does the output give us? How might we report this information in a report?
 
-> ANWSER:
+> ANWSER: Ozone AQI values in 2017-2018 were significantly lower than 50 (one sample t-test; t = -41.9, df = 184, p < 0.0001)
 
 ### Two-sample t-test
 The two-sample *t* test is used to test the hypothesis that the mean of two samples is equivalent. Unlike the one-sample tests, a two-sample test requires a second assumption that the variance of the two groups is equivalent. Are Ozone levels different between Blackstone and Bryson City?
@@ -92,7 +93,7 @@ The two-sample *t* test is used to test the hypothesis that the mean of two samp
 ```{r}
 shapiro.test(EPAair$Ozone[EPAair$Site.Name == "Blackstone"])
 shapiro.test(EPAair$Ozone[EPAair$Site.Name == "Bryson City"])
-var.test(EPAair$Ozone ~ EPAair$Site.Name)
+var.test(EPAair$Ozone ~ EPAair$Site.Name) # the variance between these population is different
 
 ggplot(EPAair, aes(x = Ozone, color = Site.Name)) +
   geom_freqpoly(stat = "count")
@@ -130,7 +131,7 @@ ggplot(EPAair, aes(x = PM2.5, color = Site.Name)) +
   geom_freqpoly(stat = "count")
 qqnorm(EPAair$PM2.5); qqline(EPAair$PM2.5)
 
-bartlett.test(EPAair$PM2.5 ~ EPAair$Site.Name)
+bartlett.test(EPAair$PM2.5 ~ EPAair$Site.Name) 
 
 # Format as a GLM
 PM2.5.anova <- lm(EPAair$PM2.5 ~ EPAair$Site.Name)
@@ -152,7 +153,7 @@ print(PM2.5.anova.plot)
 ```
 What information does the output give us? How might we report this information in a report?
 
-> ANSWER:
+> ANSWER: (ANOVA; F = 16.16 df = 1898, p < 0.0001)
 
 ### Non-parametric equivalent of ANOVA: Kruskal-Wallis Test
 As with the Wilcoxon test, the Kruskal-Wallis test is the non-parametric counterpart to the one-way ANOVA. Here, the data from two or more independent samples are replaced with their ranks without regard to the grouping AND based on the between-group sum of squares calculations. 
