@@ -60,7 +60,7 @@ cor.test(PeterPaul.chem.nutrients$irradianceWater, PeterPaul.chem.nutrients$dept
 ```
 Question: How would you report the results of this test (overall findings and report of statistical output)?
 
-> ANSWER: 
+> ANSWER: Every unit increase in depth will lead to 95.89 decrease in irradiance.(linear regression; R-square = 0.31, df = 15449, p < 0.0001)
 
 So, we see there is a significant negative correlation between irradiance and depth (lower light levels at greater depths), and that this model explains about 31 % of the total variance in irradiance. Let's visualize this relationship and the model itself. 
 
@@ -84,7 +84,7 @@ The option best suited for communicating findings is to plot the explanatory and
 # Plot the regression
 irradiancebydepth <- 
   ggplot(PeterPaul.chem.nutrients, aes(x = depth, y = irradianceWater)) +
-  #ylim(0, 2000) +
+  ylim(0, 2000) +
   geom_point() 
 print(irradiancebydepth) 
 ```
@@ -100,17 +100,19 @@ plot(irradiance.regression2)
 # Add a line and standard error for the linear regression
 irradiancebydepth2 <- 
   ggplot(PeterPaul.chem.nutrients, aes(x = depth, y = irradianceWater)) +
-  geom_smooth(method = "lm") +
   scale_y_log10() +
-  geom_point() 
+  geom_point() +
+  geom_smooth(method = "lm") 
 print(irradiancebydepth2) 
 
 # SE can also be removed
 irradiancebydepth2 <- 
-    ggplot(PeterPaul.chem.nutrients, aes(x = depth, y = irradianceWater)) +
-    geom_point() +
+    ggplot(PeterPaul.chem.nutrients, aes(x = depth, y = irradianceWater) ) +
+    geom_point(alpha = 0.2) +
     scale_y_log10() +
-    geom_smooth(method = 'lm', se = FALSE, color = "black")
+    geom_smooth(method = 'lm', se = FALSE, color = "magenta")+
+    labs(y = "Irradiance(units)", x = "Depth(m)")+
+  scale_x_continuous(breaks = c(0, 2, 4, 6, 8, 10, 12))
 print(irradiancebydepth2)
 
 # Make the graph attractive
