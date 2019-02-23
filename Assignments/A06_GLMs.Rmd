@@ -1,6 +1,6 @@
 ---
 title: "Assignment 6: Generalized Linear Models"
-author: "Student Name"
+author: "Yifei Zhang"
 output: pdf_document
 geometry: margin=2.54cm
 editor_options: 
@@ -34,8 +34,16 @@ The completed exercise is due on Tuesday, 26 February, 2019 before class begins.
 
 ```{r}
 #1
-
+getwd()
+library(tidyverse)
+library(colormap)
+EPAEcotox <- read.csv("./Data/Raw/ECOTOX_Neonicotinoids_Mortality_raw.csv")
+NTL_LTER_Lake <- read.csv("./Data/Raw/NTL-LTER_Lake_ChemistryPhysics_Raw.csv")
 #2
+Yifeitheme <- theme_light(base_size = 14) +
+  theme(axis.text = element_text(color = "black"), 
+        legend.position = "right")
+theme_set(Yifeitheme)
 
 ```
 
@@ -50,31 +58,49 @@ Research question: Were studies on various neonicotinoid chemicals conducted in 
 
 ```{r}
 #3
+length(unique(EPAEcotox$Chemical.Name))
 
 #4
+EPAEcotox %>%
+group_by(Chemical.Name)%>%
+summarise(statistic=shapiro.test(Pub..Year)$statistic, p.value = shapiro.test(Pub..Year)$p.value)
 
+  ggplot(EPAEcotox) +
+  geom_freqpoly(aes(x = Pub..Year, color = Chemical.Name)) +
+  scale_color_colormap(discrete = T)
+  
 #5
-
+  bartlett.test(EPAEcotox$Pub..Year ~ EPAEcotox$Chemical.Name)
+  
 ```
 
 6. Based on your results, which test would you choose to run to answer your research question?
 
-> ANSWER: 
+> ANSWER: I would choose one-way ANOVA. 
 
 7. Run this test below. 
 
 8. Generate a boxplot representing the range of publication years for each chemical. Adjust your graph to make it pretty.
 ```{r}
 #7
+PubYear.anova <- lm(EPAEcotox$Pub..Year ~ EPAEcotox$Chemical.Name)
+summary(PubYear.anova)
+PubYear.anova2 <- aov(EPAEcotox$Pub..Year ~ EPAEcotox$Chemical.Name)
+summary(PubYear.anova2)
+TukeyHSD(PubYear.anova2)
 
 #8
-
+ggplot(EPAEcotox, aes(x = Chemical.Name, y = Pub..Year))+
+  geom_boxplot()+
+  labs(x = "", y = "Publication Year")+
+  theme(axis.text.x = element_text(angle = 45,  hjust = 1))
+  
 ```
 
 
 9. How would you summarize the conclusion of your analysis? Include a sentence summarizing your findings and include the results of your test in parentheses at the end of the sentence. 
 
-> ANSWER: 
+> ANSWER: The publication years associated with these 9 different chemicals are relatively different(ANOVA; df=1274, F=33.21, p<0.0001)
 
 ## NTL-LTER test
 Research question: What is the best set of predictors for lake temperatures in July across the monitoring period at the North Temperate Lakes LTER? 
@@ -89,30 +115,45 @@ Research question: What is the best set of predictors for lake temperatures in J
 
 ```{r}
 #11
-
+NTL_LTER_Tidy <-NTL_LTER_Lake %>%
+  filter(daynum>=183 & daynum<=213) %>%
+  select(lakename, year4, daynum, depth, temperature_C)%>%
+  na.omit
 #12
+TempAIC <- lm(data = NTL_LTER_Tidy, temperature_C ~ year4 + daynum + 
+              depth)
+step(TempAIC)
 
+TempModel <- lm(data = NTL_LTER_Tidy, temperature_C ~ year4 + daynum + depth)
+summary(TempModel)
 ```
 
 13. What is the final linear equation to predict temperature from your multiple regression? How much of the observed variance does this model explain?
 
-> ANSWER: 
+> ANSWER: The final linear equation is temperature_C = 0.016year4 + 0.04daynum - 1.94depth -18.2, this model explains 74% of the observed variance. 
 
 14. Run an interaction effects ANCOVA to predict temperature based on depth and lakename from the same wrangled dataset.
 
 ```{r}
 #14
-
+Temp_ancova.interaction <- lm(data = NTL_LTER_Tidy, temperature_C ~ lakename * depth)
+summary(Temp_ancova.interaction)
 ```
 
 15. Is there an interaction between depth and lakename? How much variance in the temperature observations does this explain?
 
-> ANSWER: 
+> ANSWER: Except for Paul lake, there is an interaction between depth and lakename. This explains 78.6% of the variance in the temperature observations.
 
 16. Create a graph that depicts temperature by depth, with a separate color for each lake. Add a geom_smooth (method = "lm", se = FALSE) for each lake. Make your points 50 % transparent. Adjust your y axis limits to go from 0 to 35 degrees. Clean up your graph to make it pretty. 
 
 ```{r}
 #16
-
+Plot16 <- ggplot(NTL_LTER_Tidy, aes(y = temperature_C, x = depth, color = lakename))+
+  geom_point(alpha = 0.5)+
+  geom_smooth(method = "lm", se = FALSE)+
+  ylim(0,35)+
+  labs(x="Depth(m)", y= "Temperature ("~degree~"C)", color = "Lake Name")+
+  scale_color_manual(values = c('#e41a1c','#377eb8','#4daf4a','#984ea3','#ff7f00','#ffff33','#a65628','#f781bf','#999999'))
+print(Plot16)
 ```
 
