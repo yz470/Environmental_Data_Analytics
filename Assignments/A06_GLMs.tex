@@ -321,7 +321,10 @@ conducted in different years?
 \end{enumerate}
 
 \begin{quote}
-ANSWER: I would choose one-way ANOVA.
+ANSWER: They don't follow normal distributions (sharpiro.test
+pvalue\textless{}0.0001), and there are not equal variance
+(bartlett.test, df=8, pvalue\textless{}0.0001), so I will choose
+non-parametric equivalent of ANOVA: Kruskal-Wallis Test.
 \end{quote}
 
 \begin{enumerate}
@@ -337,114 +340,17 @@ ANSWER: I would choose one-way ANOVA.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{#7}
-\NormalTok{PubYear.anova <-}\StringTok{ }\KeywordTok{lm}\NormalTok{(EPAEcotox}\OperatorTok{$}\NormalTok{Pub..Year }\OperatorTok{~}\StringTok{ }\NormalTok{EPAEcotox}\OperatorTok{$}\NormalTok{Chemical.Name)}
-\KeywordTok{summary}\NormalTok{(PubYear.anova)}
+\NormalTok{PubYear.anova <-}\StringTok{ }\KeywordTok{kruskal.test}\NormalTok{(EPAEcotox}\OperatorTok{$}\NormalTok{Pub..Year }\OperatorTok{~}\StringTok{ }\NormalTok{EPAEcotox}\OperatorTok{$}\NormalTok{Chemical.Name)}
+\NormalTok{PubYear.anova}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{verbatim}
 ## 
-## Call:
-## lm(formula = EPAEcotox$Pub..Year ~ EPAEcotox$Chemical.Name)
+##  Kruskal-Wallis rank sum test
 ## 
-## Residuals:
-##     Min      1Q  Median      3Q     Max 
-## -18.366  -3.993   1.889   4.889  13.441 
-## 
-## Coefficients:
-##                                      Estimate Std. Error  t value Pr(>|t|)
-## (Intercept)                         2005.9926     0.6082 3298.222  < 2e-16
-## EPAEcotox$Chemical.NameClothianidin    2.0479     1.0246    1.999  0.04584
-## EPAEcotox$Chemical.NameDinotefuran    -3.4333     1.1057   -3.105  0.00194
-## EPAEcotox$Chemical.NameImidacloprid    3.1181     0.6651    4.689 3.05e-06
-## EPAEcotox$Chemical.NameImidaclothiz    6.4518     2.4412    2.643  0.00832
-## EPAEcotox$Chemical.NameNitenpyram      7.7216     1.6630    4.643 3.78e-06
-## EPAEcotox$Chemical.NameNithiazine    -17.6290     1.6299  -10.816  < 2e-16
-## EPAEcotox$Chemical.NameThiacloprid     1.6394     0.9190    1.784  0.07467
-## EPAEcotox$Chemical.NameThiamethoxam    4.3738     0.8261    5.295 1.40e-07
-##                                        
-## (Intercept)                         ***
-## EPAEcotox$Chemical.NameClothianidin *  
-## EPAEcotox$Chemical.NameDinotefuran  ** 
-## EPAEcotox$Chemical.NameImidacloprid ***
-## EPAEcotox$Chemical.NameImidaclothiz ** 
-## EPAEcotox$Chemical.NameNitenpyram   ***
-## EPAEcotox$Chemical.NameNithiazine   ***
-## EPAEcotox$Chemical.NameThiacloprid  .  
-## EPAEcotox$Chemical.NameThiamethoxam ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Residual standard error: 7.093 on 1274 degrees of freedom
-## Multiple R-squared:  0.1726, Adjusted R-squared:  0.1674 
-## F-statistic: 33.21 on 8 and 1274 DF,  p-value: < 2.2e-16
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\NormalTok{PubYear.anova2 <-}\StringTok{ }\KeywordTok{aov}\NormalTok{(EPAEcotox}\OperatorTok{$}\NormalTok{Pub..Year }\OperatorTok{~}\StringTok{ }\NormalTok{EPAEcotox}\OperatorTok{$}\NormalTok{Chemical.Name)}
-\KeywordTok{summary}\NormalTok{(PubYear.anova2)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##                           Df Sum Sq Mean Sq F value Pr(>F)    
-## EPAEcotox$Chemical.Name    8  13365  1670.7   33.21 <2e-16 ***
-## Residuals               1274  64093    50.3                   
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-\end{verbatim}
-
-\begin{Shaded}
-\begin{Highlighting}[]
-\KeywordTok{TukeyHSD}\NormalTok{(PubYear.anova2)}
-\end{Highlighting}
-\end{Shaded}
-
-\begin{verbatim}
-##   Tukey multiple comparisons of means
-##     95% family-wise confidence level
-## 
-## Fit: aov(formula = EPAEcotox$Pub..Year ~ EPAEcotox$Chemical.Name)
-## 
-## $`EPAEcotox$Chemical.Name`
-##                                  diff          lwr           upr     p adj
-## Clothianidin-Acetamiprid    2.0478935  -1.13556203   5.231348994 0.5444735
-## Dinotefuran-Acetamiprid    -3.4333250  -6.86887521   0.002225165 0.0502982
-## Imidacloprid-Acetamiprid    3.1181443   1.05175043   5.184538190 0.0001059
-## Imidaclothiz-Acetamiprid    6.4517974  -1.13341497  14.037009746 0.1700689
-## Nitenpyram-Acetamiprid      7.7216387   2.55455876  12.888718547 0.0001312
-## Nithiazine-Acetamiprid    -17.6290107 -22.69334307 -12.564678323 0.0000000
-## Thiacloprid-Acetamiprid     1.6394284  -1.21592420   4.494781028 0.6929485
-## Thiamethoxam-Acetamiprid    4.3738126   1.80714109   6.940484045 0.0000050
-## Dinotefuran-Clothianidin   -5.4812185  -9.32765358  -1.634783428 0.0003529
-## Imidacloprid-Clothianidin   1.0702508  -1.62456668   3.765068330 0.9489438
-## Imidaclothiz-Clothianidin   4.4039039  -3.37603853  12.183846336 0.7094335
-## Nitenpyram-Clothianidin     5.6737452   0.22482121  11.122669133 0.0338611
-## Nithiazine-Clothianidin   -19.6769042 -25.02849460 -14.325313751 0.0000000
-## Thiacloprid-Clothianidin   -0.4084651  -3.74689228   2.929962144 0.9999879
-## Thiamethoxam-Clothianidin   2.3259191  -0.76921583   5.421054007 0.3218154
-## Imidacloprid-Dinotefuran    6.5514693   3.56304877   9.539889900 0.0000000
-## Imidaclothiz-Dinotefuran    9.8851224   1.99867071  17.771574107 0.0033119
-## Nitenpyram-Dinotefuran     11.1549637   5.55501829  16.754909074 0.0000000
-## Nithiazine-Dinotefuran    -14.1956857 -19.70096824  -8.690403099 0.0000000
-## Thiacloprid-Dinotefuran     5.0727534   1.49312883   8.652378050 0.0003937
-## Thiamethoxam-Dinotefuran    7.8071376   4.45326278  11.161012409 0.0000000
-## Imidaclothiz-Imidacloprid   3.3336531  -4.05979665  10.727102808 0.8976481
-## Nitenpyram-Imidacloprid     4.6034943  -0.27773162   9.484720319 0.0825706
-## Nithiazine-Imidacloprid   -20.7471550 -25.51948303 -15.974826981 0.0000000
-## Thiacloprid-Imidacloprid   -1.4787159  -3.77669129   0.819259503 0.5440493
-## Thiamethoxam-Imidacloprid   1.2556683  -0.67188326   3.183219776 0.5266734
-## Nitenpyram-Imidaclothiz     1.2698413  -7.51035405  10.050036590 0.9999561
-## Nithiazine-Imidaclothiz   -24.0808081 -32.80093294 -15.360683218 0.0000000
-## Thiacloprid-Imidaclothiz   -4.8123690 -12.46391482   2.839176871 0.5758935
-## Thiamethoxam-Imidaclothiz  -2.0779848  -9.62655539   5.470585757 0.9950400
-## Nithiazine-Nitenpyram     -25.3506494 -32.07402988 -18.627268825 0.0000000
-## Thiacloprid-Nitenpyram     -6.0822102 -11.34618420  -0.818236282 0.0103350
-## Thiamethoxam-Nitenpyram    -3.3478261  -8.46096463   1.765312458 0.5194316
-## Thiacloprid-Nithiazine     19.2684391  14.10528410  24.431594116 0.0000000
-## Thiamethoxam-Nithiazine    22.0028233  16.99353853  27.012107998 0.0000000
-## Thiamethoxam-Thiacloprid    2.7343842  -0.02215529   5.490923603 0.0538087
+## data:  EPAEcotox$Pub..Year by EPAEcotox$Chemical.Name
+## Kruskal-Wallis chi-squared = 134.15, df = 8, p-value < 2.2e-16
 \end{verbatim}
 
 \begin{Shaded}
@@ -471,8 +377,8 @@ ANSWER: I would choose one-way ANOVA.
 
 \begin{quote}
 ANSWER: The publication years associated with these 9 different
-chemicals are relatively different(ANOVA; df=1274, F=33.21,
-p\textless{}0.0001)
+chemicals are different(Kruskal-Wallis test; Kruskal-Wallis chi-squared
+= 134.15, df = 8, p\textless{}0.0001)
 \end{quote}
 
 \subsection{NTL-LTER test}\label{ntl-lter-test}

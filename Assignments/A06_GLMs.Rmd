@@ -76,18 +76,16 @@ summarise(statistic=shapiro.test(Pub..Year)$statistic, p.value = shapiro.test(Pu
 
 6. Based on your results, which test would you choose to run to answer your research question?
 
-> ANSWER: I would choose one-way ANOVA. 
+> ANSWER: They don't follow normal distributions (sharpiro.test pvalue<0.0001), and there are not equal variance (bartlett.test, df=8, pvalue<0.0001), so I will choose non-parametric equivalent of ANOVA: Kruskal-Wallis Test.
 
 7. Run this test below. 
 
 8. Generate a boxplot representing the range of publication years for each chemical. Adjust your graph to make it pretty.
 ```{r}
 #7
-PubYear.anova <- lm(EPAEcotox$Pub..Year ~ EPAEcotox$Chemical.Name)
-summary(PubYear.anova)
-PubYear.anova2 <- aov(EPAEcotox$Pub..Year ~ EPAEcotox$Chemical.Name)
-summary(PubYear.anova2)
-TukeyHSD(PubYear.anova2)
+PubYear.anova <- kruskal.test(EPAEcotox$Pub..Year ~ EPAEcotox$Chemical.Name)
+PubYear.anova
+
 
 #8
 ggplot(EPAEcotox, aes(x = Chemical.Name, y = Pub..Year))+
@@ -100,7 +98,7 @@ ggplot(EPAEcotox, aes(x = Chemical.Name, y = Pub..Year))+
 
 9. How would you summarize the conclusion of your analysis? Include a sentence summarizing your findings and include the results of your test in parentheses at the end of the sentence. 
 
-> ANSWER: The publication years associated with these 9 different chemicals are relatively different(ANOVA; df=1274, F=33.21, p<0.0001)
+> ANSWER: The publication years associated with these 9 different chemicals are different(Kruskal-Wallis test; Kruskal-Wallis chi-squared = 134.15, df = 8, p<0.0001)
 
 ## NTL-LTER test
 Research question: What is the best set of predictors for lake temperatures in July across the monitoring period at the North Temperate Lakes LTER? 
