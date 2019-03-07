@@ -130,7 +130,10 @@ cld(TempTest.posthoc, alpha = 0.05, Letters = letters, adjust = "tukey")
 ggplot(PeterPaul.summertemp, aes(x = sampledate, y = temperature_C, color = lakename)) +
   geom_point() +
   scale_color_manual(values = c("#7fcdbb", "#253494")) +
-  geom_abline(intercept = 20.47, slope = 0.0001)
+  geom_abline(intercept = 20.47, slope = 0.0001)+
+  labs(x="Date", y="Temperature ("~degree~"C)")+
+  geom_text(x = as.Date("2011/01/01"), y = 26, label = "y=ax+b", hjust = 1,color="black")
+  
 ```
 
 Question: How would you interpret the collective results of your mixed effects model in the context of the study question?
