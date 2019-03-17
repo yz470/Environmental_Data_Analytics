@@ -78,7 +78,7 @@ Paul.nutrients.surface <- filter(PeterPaul.nutrients.surface, lakename == "Paul 
 
 # Run a Mann-Kendall test
 mk.test(Peter.nutrients.surface$tp_ug)
-
+#Alternative hypothesis: there is a trend happenning over time
 ```
 
 However, it looks like there might be a breakpoint in our dataset. Further, we know that Peter Lake underwent experimental fertilization starting in May 1993, a perturbation which we might expect to have induced a regime shift in the ecosystem. In this case, we might want to find out whether there is a breakpoint, or changepoint, in our dataset. 
@@ -107,6 +107,8 @@ pettitt.test(Paul.nutrients.surface$tp_ug)
 # Add vertical lines to the original graph to represent change points
 ggplot(PeterPaul.nutrients.surface, aes(x = sampledate, y = tp_ug, color = lakename)) + 
   geom_point() +
+  geom_vline(xintercept = as.Date("1993-05-20"),color="yellow", lty = 2)+
+  geom_vline(xintercept = as.Date("1998-01-01"),color="yellow", lty = 2)+
   scale_color_manual(values = c("#7fcdbb", "#253494"))
 
 ```
@@ -123,7 +125,8 @@ USGS.flow.data.trimmed <- USGS.flow.data %>%
 
 # Visualize the data
 ggplot(USGS.flow.data.trimmed, aes(x = datetime, y = discharge.mean)) +
-  geom_point(size = 0.5, alpha = 0.5)
+  geom_point(size = 0.5, alpha = 0.5)+
+  scale_y_log10()
 ```
 
 ### Interpolation
