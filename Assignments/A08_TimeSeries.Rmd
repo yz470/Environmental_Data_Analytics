@@ -64,7 +64,7 @@ Research question: Do PM2.5 concentrations have a significant trend in 2018?
 
 3a. Illustrate PM2.5 concentrations by date. Do not split aesthetics by site.
 
-```{r}
+```{r, warning = FALSE}
 ggplot(EPAair, aes(x = Date, y = Daily.Mean.PM2.5.Concentration))+
   geom_point()+
   labs(x="")+
@@ -79,7 +79,7 @@ PM2.5 = PM2.5[!duplicated(PM2.5$Date),]
 
 3d. Run a mixed effects model. 
 
-```{r}
+```{r, warning = FALSE}
 EPAair = EPAair[order(EPAair[,'Date'],-EPAair[,'Site.ID']),]
 EPAair = EPAair[!duplicated(EPAair$Date),]
 
@@ -106,7 +106,7 @@ Is there a significant increasing or decreasing trend in PM2.5 concentrations in
 
 3e. Run a fixed effects model with Date as the only explanatory variable. Then test whether the mixed effects model is a better fit than the fixed effect model. 
 
-```{r}
+```{r, warning = FALSE}
 PM2.5Test_fixed <- gls(data = EPAair,
                       Daily.Mean.PM2.5.Concentration ~ Date, 
                       method = "REML")
@@ -127,7 +127,7 @@ Research question: Is there a trend in total N surface concentrations in Peter a
 
 4. Duplicate the Mann-Kendall test we ran for total P in class, this time with total N for both lakes. Make sure to run a test for changepoints in the datasets (and run a second one if a second change point is likely). 
 
-```{r}
+```{r, warning = FALSE}
 PeterPaul.surface <- 
   PeterPaul %>%
   select(-lakeid, -depth_id, -comments) %>%
@@ -169,7 +169,7 @@ What are the results of this test?
 
 5. Generate a graph that illustrates the TN concentrations over time, coloring by lake and adding vertical line(s) representing changepoint(s).
 
-```{r}
+```{r, warning = FALSE}
 ggplot(PeterPaul.surface, aes(x = sampledate, y = tn_ug, color = lakename)) + 
   geom_point() +
   geom_vline(xintercept = as.Date("1993-06-02"),color="yellow", lty = 2)+
