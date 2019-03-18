@@ -94,7 +94,7 @@ PM2.5Test_mixed <- lme(data = EPAair,
                      Daily.Mean.PM2.5.Concentration ~ Date, 
                      random = ~1|Site.Name,
                      #specify autocorrelation structure of order 1
-                     correlation = corAR1(form = ~ Date|Site.Name, value = 0.474),
+                     correlation = corAR1(form = ~ Date|Site.Name, value = 0.513),
                      #define method as restricted maximum likelihood
                      method = "REML")
 summary(PM2.5Test_mixed)

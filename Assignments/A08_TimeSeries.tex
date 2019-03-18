@@ -215,7 +215,7 @@ ANSWER: Yes.
 \end{Shaded}
 
 \begin{verbatim}
-## -- Attaching packages ---------------------------------------------------------- tidyverse 1.2.1 --
+## -- Attaching packages ----------------------------------------------------------- tidyverse 1.2.1 --
 \end{verbatim}
 
 \begin{verbatim}
@@ -226,7 +226,7 @@ ANSWER: Yes.
 \end{verbatim}
 
 \begin{verbatim}
-## -- Conflicts ------------------------------------------------------------- tidyverse_conflicts() --
+## -- Conflicts -------------------------------------------------------------- tidyverse_conflicts() --
 ## x dplyr::filter() masks stats::filter()
 ## x dplyr::lag()    masks stats::lag()
 \end{verbatim}
@@ -375,7 +375,7 @@ PM2.5{[}!duplicated(PM2.5\$Date),{]}
 \NormalTok{                     Daily.Mean.PM2.}\FloatTok{5.}\NormalTok{Concentration }\OperatorTok{~}\StringTok{ }\NormalTok{Date, }
                      \DataTypeTok{random =} \OperatorTok{~}\DecValTok{1}\OperatorTok{|}\NormalTok{Site.Name,}
                      \CommentTok{#specify autocorrelation structure of order 1}
-                     \DataTypeTok{correlation =} \KeywordTok{corAR1}\NormalTok{(}\DataTypeTok{form =} \OperatorTok{~}\StringTok{ }\NormalTok{Date}\OperatorTok{|}\NormalTok{Site.Name, }\DataTypeTok{value =} \FloatTok{0.474}\NormalTok{),}
+                     \DataTypeTok{correlation =} \KeywordTok{corAR1}\NormalTok{(}\DataTypeTok{form =} \OperatorTok{~}\StringTok{ }\NormalTok{Date}\OperatorTok{|}\NormalTok{Site.Name, }\DataTypeTok{value =} \FloatTok{0.513}\NormalTok{),}
                      \CommentTok{#define method as restricted maximum likelihood}
                      \DataTypeTok{method =} \StringTok{"REML"}\NormalTok{)}
 \KeywordTok{summary}\NormalTok{(PM2.5Test_mixed)}
@@ -391,7 +391,7 @@ PM2.5{[}!duplicated(PM2.5\$Date),{]}
 ## Random effects:
 ##  Formula: ~1 | Site.Name
 ##         (Intercept) Residual
-## StdDev: 0.001079826 3.597269
+## StdDev: 0.001019731 3.597269
 ## 
 ## Correlation Structure: ARMA(1,0)
 ##  Formula: ~Date | Site.Name 
@@ -400,7 +400,7 @@ PM2.5{[}!duplicated(PM2.5\$Date),{]}
 ## 0.5384349 
 ## Fixed effects: Daily.Mean.PM2.5.Concentration ~ Date 
 ##                Value Std.Error  DF   t-value p-value
-## (Intercept) 83.14801  60.63584 339  1.371268  0.1712
+## (Intercept) 83.14801  60.63585 339  1.371268  0.1712
 ## Date        -0.00426   0.00342 339 -1.244145  0.2143
 ##  Correlation: 
 ##      (Intr)
