@@ -102,7 +102,7 @@ summary(PM2.5Test_mixed)
 
 Is there a significant increasing or decreasing trend in PM2.5 concentrations in 2018? 
 
-> ANSWER: The p-value is 0.36 > 0.05, which indicates there is not a significant trend in PM2.5 concentration in 2018.
+> ANSWER: The p-value is 0.21 > 0.05, which indicates there is not a significant trend in PM2.5 concentration in 2018.
 
 3e. Run a fixed effects model with Date as the only explanatory variable. Then test whether the mixed effects model is a better fit than the fixed effect model. 
 
