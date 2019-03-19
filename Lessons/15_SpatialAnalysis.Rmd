@@ -353,7 +353,7 @@ state_sf2 <- st_union(counties_sf)
 mapview(state_sf2)
 ```
 
-> Now you try it: Aggregate the HUC data on the SUB attribute, computing the sum of the "area" field and view the result. 
+> Now you try it: Aggregate the HUC data on the SUB attribute, computing the sum of the "AREA" field and view the result. 
 
 ```{r Aggregate the HUC data on an attribute, saving as huc2_sf}
 huc2_sf <- 
@@ -455,14 +455,13 @@ huc2_UTM_nc <- st_intersection(huc2_utm,state_sf_utm)
 mapview(huc2_UTM_nc)
 ```
 
-> Exercise: Try subsetting the HUc2 dataset for SUB = 0302, then clipping counties with that subset.
+> Exercise: Try subsetting the huc2_UTM dataset for SUB = 0302, then clipping counties with that subset.
 
-```{r EXERCISE: Clipping}
-huc0304 <- 
+```{r EXERCISE: Clip the counties dataset with the border of HUC 0302}
+huc0302_counties <- 
   
-  
-mapview(huc0304)
-
+#Map the product, showing values by land area
+mapview(huc0302_counties['ALAND'])
 ```
 
 
