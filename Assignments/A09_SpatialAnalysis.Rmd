@@ -23,7 +23,7 @@ Space for your answers is provided in this document and is indicated by the ">" 
 If you need a second paragraph be sure to start the first line with ">".
 You should notice that the answer is highlighted in green by RStudio. 
 6. When you have completed the assignment, **Knit** the text and code into a single HTML file.
-7. After Knitting, please submit the completed exercise (PDF file) to the dropbox in Sakai. Please add your last name into the file name (e.g., "Fay_A09_TimeSeries.pdf") prior to submission.
+7. After Knitting, please submit the completed exercise (HTML file) to the dropbox in Sakai. Please add your last name into the file name (e.g., "Fay_A09_SpatialAnalysis.pdf") prior to submission.
 
 ## DATA WRANGLING
 
