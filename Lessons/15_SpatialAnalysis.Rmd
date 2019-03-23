@@ -292,7 +292,7 @@ Below we read in the USA counties shapefile, filtering for just the NC features 
 counties_sf<- st_read('./Data/Spatial/cb_2017_us_county_20m.shp') %>% 
   filter(STATEFP == 37) #Filter for just NC Counties
 
-#CRS (Is this the same as the EPA Dataset?)
+#CRS (Is this the same as the EPA Dataset?) Coordinate Reference System
 st_crs(counties_sf)
 
 #Column names
@@ -316,33 +316,37 @@ mapView(counties_sf)
 
 ```{r read HUCs shapefile}
 #Read the shapefile into an sf dataframe named "huc8_sf"
-huc8_sf <-   
+huc8_sf <- st_read('./Data/Spatial/huc_250k_nc.shp')
 
 #Check the CRS
-
+st_crs(huc8_sf)
 
 #Exaimine the column names
-
+names(huc8_sf)
 
 #View the data as a map
+mapView(huc8_sf)
 
+plot(huc8_sf['SUB'],
+      graticule = st_crs(4326),
+      axes = TRUE)
 ```
 
 > _Challenge_: Read in the NC 8-Digit HUC dataset again, but this time _filter_ the data so the result only includes the one with a HUC_NAME value of 'Upper Neuse'.
 
 ```{r Select the Upper Neuse HUC 8}
 #Read the shapefile into an sf dataframe
-upperNeuse_sf <-  
+upperNeuse_sf <-  huc8_sf %>%
+  filter(HUC_NAME=='Upper Neuse')
   
-
+mapView(upperNeuse_sf)
 ```
 
 
 ## Spatial data aggregation with group_by and summarize
 ```{r Dissolve all counties into a single feature}
 #Aggregate the data using group_by and summarize, just as you would a non-spatial dataframe
-state_sf <- counties_sf %>% 
-  group_by('STATEFP') %>% 
+state_sf <- counties_sf %>%
   summarize(ALAND = sum(ALAND))
 
 #View the data
@@ -356,7 +360,9 @@ mapview(state_sf2)
 > Now you try it: Aggregate the HUC data on the SUB attribute, computing the sum of the "AREA" field and view the result. 
 
 ```{r Aggregate the HUC data on an attribute, saving as huc2_sf}
-huc2_sf <- 
+huc2_sf <- huc8_sf %>%
+  group_by(SUB) %>%
+  summarise(AREA = sum(AREA))
   
   
 mapview(huc2_sf)
@@ -413,6 +419,7 @@ ggplot() +
 ### leaflet
 Tip: See http://leaflet-extras.github.io/leaflet-providers/ for other basemaps
 ```{r Visualizing multiple datasets with leaflet}
+
 leaflet() %>% 
   addProviderTiles(providers$Esri.WorldShadedRelief) %>%  
   addPolygons(data = counties_WGS84, color = "orange", weight = 1, smoothFactor = 0.5,   
@@ -458,10 +465,13 @@ mapview(huc2_UTM_nc)
 > Exercise: Try subsetting the huc2_UTM dataset for SUB = 0302, then clipping counties with that subset.
 
 ```{r EXERCISE: Clip the counties dataset with the border of HUC 0302}
-huc0302_counties <- 
+huc0302_counties <- huc2_UTM_nc %>%
+  filter(SUB == "0302")%>%
+  st_intersection(counties_sf_utm)
+    
   
 #Map the product, showing values by land area
-mapview(huc0302_counties['ALAND'])
+mapview(huc0302_counties['ALAND'], legend= FALSE)
 ```
 
 
