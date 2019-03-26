@@ -1,12 +1,15 @@
 ---
-title: "Assignment: Spatial Analysis in R"
+title: 'Assignment: Spatial Analysis in R'
 author: "Yifei Zhang"
+geometry: margin=2.54cm
 output:
   html_document:
-    toc: true
+    theme: cosmo
+    toc: yes
     toc_depth: 2
-    theme: "cosmo"
-geometry: margin=2.54cm
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
 editor_options:
   chunk_output_type: console
 ---
@@ -74,7 +77,6 @@ NE_gage_location <- read.csv("./Data/Raw/NWIS_SiteInfo_NE_RAW.csv")
 
 #Reveal the names of the columns
 colnames(NE_gage_location)
-head(NE_gage_location)
 ```
 > QUESTION: What columns in the dataset contain the x and y coordinate values, respectively? 
 > ANSWER: columns dec_long_va and dec_lat_va contain x and y coordinate values, respectively.      
@@ -87,7 +89,7 @@ head(NE_gage_location)
 NE_gage_location_sf <- st_as_sf(NE_gage_location, coords = c('dec_long_va' , 'dec_lat_va'), crs = 4269)
 
 #Reveal the structure
-head(NE_gage_location_sf)
+colnames(NE_gage_location_sf)
 ```
 > QUESTION: What new field(s) appear in the sf dataframe created? What field(s), if any, disappeared?
 > ANSWER: The geometry field appears in the sf dataframe created. The longitudes and lattitudes columns disappeared, and the information is instead stored in the geometry column.
@@ -119,7 +121,7 @@ stream gage heights (in meters) recorded during the recent flood event. This fil
 NE_gageheight <- read.csv("./Data/Raw/NWIS_SiteFlowData_NE_RAW.csv")
 
 #Show the column names
-colnames(NE_gagesite)
+colnames(NE_gageheight)
 
 #Join location data to it
 gage_join <- NE_gage_location %>%
