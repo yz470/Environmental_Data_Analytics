@@ -3,13 +3,13 @@ title: 'Assignment: Spatial Analysis in R'
 author: "Yifei Zhang"
 geometry: margin=2.54cm
 output:
+  pdf_document:
+    toc: yes
+    toc_depth: '2'
   html_document:
     theme: cosmo
     toc: yes
     toc_depth: 2
-  pdf_document:
-    toc: yes
-    toc_depth: '2'
 editor_options:
   chunk_output_type: console
 ---
@@ -60,7 +60,10 @@ Nebraska <- st_read('./Data/Spatial/cb_2017_us_county_20m.shp') %>%
 st_crs(Nebraska)
 
 #Plot the data
-mapview(Nebraska)
+#mapview(Nebraska)
+#I comment this code because mapview is not compatible with PDF output.
+ggplot()+
+  geom_sf(data = Nebraska)
 ```
 > QUESTION: What is the EPSG code of the Counties dataset? Using http://spatialreference.org, is this a geographic or a projected coordinate system? (Or, does this CRS use angular or planar coordinate units?) To what datum is this CRS associated?  
 > ANSWER: The EPSG code is 4269. This is a geographic coordinate system. It is associated with North American Datum 1983.
