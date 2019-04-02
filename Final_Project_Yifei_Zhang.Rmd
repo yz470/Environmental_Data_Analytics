@@ -1,0 +1,54 @@
+---
+title: "Final_Project"
+author: "Yifei Zhang"
+date: "4/1/2019"
+output: pdf_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+getwd()
+library(tidyverse)
+Sys.getlocale()
+shanghai_2012 <- read.csv("./Final_Project/Data/Raw/Shanghai_2012_HourlyPM25.csv", skip = 3,fileEncoding="latin1")
+shanghai_2013 <- read.csv("./Final_Project/Data/Raw/Shanghai_2013_HourlyPM25.csv", skip = 3,fileEncoding="latin1")
+shanghai_2014 <- read.csv("./Final_Project/Data/Raw/Shanghai_2014_HourlyPM25.csv", skip = 3,fileEncoding="latin1")
+shanghai_2015 <- read.csv("./Final_Project/Data/Raw/Shanghai_2015_HourlyPM25.csv", skip = 3,fileEncoding="latin1")
+shanghai_2016 <- read.csv("./Final_Project/Data/Raw/Shanghai_2016_HourlyPM25.csv", skip = 3,fileEncoding="latin1")
+shanghai_2017 <- read.csv("./Final_Project/Data/Raw/Shanghai_2017_HourlyPM25.csv", skip = 3,fileEncoding="latin1")
+```
+
+## R Markdown
+```{r}
+Shanghai12to17 <- do.call("rbind", list(shanghai_2012, shanghai_2013, shanghai_2014, shanghai_2015, shanghai_2016, shanghai_2017))
+
+Shanghai12to17_Processed <- Shanghai12to17 %>%
+  filter(QC.Name == "Valid" & Value >=0)%>%
+  group_by(Year,Month, Day)%>%
+  summarise(Daily_Mean_PM25 = mean(Value))
+
+  Shanghai12to17_Processed$Date <- as.Date(with(Shanghai12to17_Processed, paste(Year, Month, Day, sep="-")), "%Y-%m-%d")
+  
+  Shanghai12to17_Processed <- Shanghai12to17_Processed[,c(5,1,2,3,4)]
+  
+```
+
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
